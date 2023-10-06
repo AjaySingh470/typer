@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://hinkhoj.com/common/js/keyboard.js"></script>
+    <link rel="stylesheet" type="text/css"
+    href="https://hinkhoj.com/common/css/keyboard.css" />
+    <title>Document</title>
+    
+    <style>
+        body{
+            color : white;
+
+            background-color: rgb(36, 34, 34);
+        }
+        .text-input{
+            color : white;
+            background-color: rgb(36, 34, 34);
+            display: flex;
+            
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        textarea{
+            border-radius: 10px;
+            color : white;
+            font-size: 16px;
+            width: 80%;
+            padding: 10px;
+            background-color: rgb(51, 46, 46);
+        }
+        td{
+            padding: 5px;
+            border:1px solid black;
+        }
+        center{
+            width: 80%;
+            padding-top: 20px;
+            /* height: 100px; */
+        }
+        .mnt{
+            display: flex;
+            flex-direction: row;
+            gap : 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        button{
+            background-color: brown;
+            padding: 10px;
+            border-radius: 13px;
+            outline: none;
+            border: none;
+            color: white;
+            font-size:20px;
+        }
+    </style>
+   
+</head>
+<body>
+
+    <div class="text-input" >
+        <div class="mnt">
+        
+            <button class="btn-fire" >Save To DataBase</button>
+            <button style="background-color: blueviolet;" >Clear</button>
+
+        </div>
+        <h3>Begin with your tHOughTs:-</h3>
+        <script language="javascript">
+            CreateCustomHindiTextArea("id 1","",100,28,true);
+        </script>
+    </div>
+    <script>
+        var tmp = document.querySelector('textarea');
+        document.addEventListener('keyup', event => {
+            if (event.code === 'Space') {
+                localStorage.setItem("txtm",tmp.value);
+            }
+        })
+        window.onload = function(event) {
+            // console.log(tmp.value)
+            var gg = localStorage.getItem("txtm");
+            tmp.value = gg;
+        }
+       
+    </script>
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+       
+        const firebaseConfig = {
+          apiKey: "AIzaSyBCycUKn45idwrr82KzYz_8Y_2oESIJrsM",
+          authDomain: "typer-fca95.firebaseapp.com",
+          projectId: "typer-fca95",
+          storageBucket: "typer-fca95.appspot.com",
+          messagingSenderId: "831410671012",
+          appId: "1:831410671012:web:3832d0ed413b7eba4ac531",
+          measurementId: "G-R9DNWFJP8H"
+        };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import {collection ,  setDoc , doc,getFirestore } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        const db = getFirestore(app)
+        function insertStory(){
+            let story = document.querySelector('textarea').value;
+            let title = prompt('Give Your Story a Title!!')
+            let date = new Date();
+            ///
+            const refr = doc(db , 'stories' , title);
+            setDoc(refr, {
+                title : title,
+                text : story,
+                date : date.toString()
+            })
+        }
+        let tmp = document.querySelector('.btn-fire').addEventListener('click',insertStory);
+    </script>
+</body>
+
+</html>
