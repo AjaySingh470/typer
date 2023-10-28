@@ -115,7 +115,7 @@
             tmp.value = "";
         })
         document.querySelector('.btn-count').addEventListener('click',event=>{
-            const count = tmp.value.split(' ').filter((word) => word.length > 0).length;
+            const count = tmp.value.split(' ').filter((word) => (word.length > 0 && word !== "|") ).length;
             alert(`word count is ${count} `)
         })
         document.addEventListener('keyup', event => {
